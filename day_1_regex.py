@@ -97,6 +97,65 @@ result = re.search(r"emma", target_string, re.IGNORECASE)
 print("Matching word:", result.group())  # Matching word: Emma
 
 
+# Itermathod in Python
+
+# the finditer method works similar to findall , but it returns iter object
+import re
+res=re.finditer(r"\b\w{5}\b", "Jessa and Kelly")
+print(res)
+for matched in res:
+    print(matched.group())
+
+# why we use finditer instead of findall?
+# If number of matches is high so that it would fill list memory buffer, to avoid use finditer
+
+#  Find all works starting with specific letter
+
+target_string ="Jessa is python developer. She also gives Python programming training"
+res=re.findall(r"\b[p]\w+\b", target_string,re.I)
+print(res)
+
+"""
+\b is word boundary
+p--> starts with letter p
+\w+ --> one or more laphanumeric charcatre
+\b==> end with word
+"""
+
+# find all word that start with specific
+
+res=re.findall(r"\bpy\w+\b", target_string, re.I)
+print(res)
+
+# Regex to find all the word that start with specific string and end with string
+
+res=re.findall(r"[p]\w+[n]",target_string, re.I)
+print(res) #['python', 'Python']
+
+res=re.findall(r'\b[py]\w+[g]',target_string,re.I)
+print(res)  #['programming']
+
+# All words start or ends with letter
+target_string="Kelly loves banana and apple"
+res=re.findall(r"\b[a]\w+\b|\b\w+[a]\b", target_string, re.I)
+print(res)  #['banana', 'and', 'apple']
+
+# Find all word that contains letter i
+target_string="Jessa knows testing and machine learning"
+matched_word=re.findall(r"\b\w*[i]\w*\b",target_string,re.I)
+print(matched_word)
+
+# Find all the word contains "ing" string
+matched_word=re.findall(r"\b\w*ing\w*\b",target_string, re.I)  #['banana', 'and', 'apple']
+print(matched_word)  #['testing', 'learning']
+
+# Find the string with single occurances and multi
+target_string= "Jessica SMithh  "
+matcher=re.compile(r'(.)\1*')
+matched_object=matcher.finditer(target_string)
+x=[c.group() for c in matched_object]
+print(x)  #['J', 'e', 'ss', 'i', 'c', 'a', ' ', 'S', 'M', 'i', 't', 'hh', '  ']
+
 
 
 
