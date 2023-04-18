@@ -82,6 +82,15 @@ result=re.split(r"\s(?=[A-Z]+)", test_string)
 print(result)
 
 
+# re.subn(pattern, replacement_string, target_string)
+# It is similar to re.sub method but it return a tuple containing two element
+# 1. Modified string
+# 2. Number of replacement done
+
+target_string="Annie loves APPLE,BANANA,COCONUT ice cream"
+result=re.subn(r"[A-Z]{2,}","MANGO",target_string)
+print(result)  #('Annie loves MANGO,MANGO,MANGO ice cream', 3)
+
 
 
 
