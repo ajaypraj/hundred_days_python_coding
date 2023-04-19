@@ -1,0 +1,145 @@
+import re
+
+# Special sequence represents the basic predefined character class
+
+# \d ==> [0-9]-->matches any number between 0 to 9
+# \D ==> [^0-9]-->matches apart from 0 to 9
+# \s ==> [\t\n\x0b\r\f]--> matches to space
+# \w ==> [a-zA-Z_0-9]--> 
+
+to alpha numeric
+# \b ==> Matches the empty string , but only beginning or end of the string
+# \A ==> matches at the begging of string
+# \Z ==> matches at the end of string
+
+target_str = "8000 dollar"
+res = re.findall(r"\d", target_str)
+print(res)  # ['8', '0', '0', '0']
+res = re.findall(r"\D", target_str)
+print(res)  # [' ', 'd', 'o', 'l', 'l', 'a', 'r']
+
+target_str = "Jessica   \t   \n"
+res = re.findall(r"\s", target_str)
+print(res)  # matches the white space  [' ', ' ', ' ', '\t', ' ', ' ', ' ', '\n']
+
+target_str = "Ajay_ jwfwb "
+res = re.findall(r"\w+", target_str)
+print(res)  # ['Ajay_', 'jwfwb']
+
+target_str = "Jessa salary is $8000 she is python developer"
+res = re.findall(r"\w{5}\b", target_str)
+print(res)  # ['salary', 'python']
+
+# Here is practice problem
+# Create a regex that finds dates in the format MM/DD/YY or MM/DD/YYYY and returns just
+# the year part.
+# 10/06/2022  ==it should return 2022
+import re
+string="10/06/2022 this is 20/03/24"
+result=re.finditer(r"(\d{2}\/\d{2}\/\d{4})|(\d{2}\/\d{2}\/\d{2})", string)
+for x in result:
+    print(x.group())
+#10/06/2022
+#20/03/24
+
+# Create a regex that finds phone numbers like 333-232-3403 or (333) 232 3403.
+
+string ="(333) 232 3403 this is one format and there is one more format 333-232-3403"
+# result=re.findall(r"3{3}\-\d{3}\-\d{4}", string)
+result=re.finditer(r"(3{3}\-\d{3}\-\d{4})|(\(3{3}\)\s\d{3}\s\d{4})", string)
+for x in result:
+    print(x.group())
+
+#Create a regex that returns only the first alphabetic word (upper and lower case)
+# at the start of the string.
+string ="Here is the string"
+result=re.search(r"^[A-Za-z]\w*",string)
+print(result.group())  #"H"
+
+#Replace ‘YOUR_REGEX’ below with a regex that matches any price in the form of $3.45 or $23.32 or $400.
+
+string="$3.45"
+res=re.findall(r"\$\d\.\d{2}",string)
+string="$23.45"
+res=re.findall(r"\$\d{2}\.\d{2}",string)
+
+string="$400"
+res=re.findall(r"\$\d{3}",string)
+print(res)
+
+# Python generator function:
+# It uses yield instead of return keyword
+# It yields items instead of returning the list
+
+def first_n(n):
+    num, nums = 0, []
+    while num < n:
+        nums.append(num)
+        num = num + 1
+    return nums  # list will be returns
+
+
+sum_of_first = sum(first_n(1000000))
+# writing generator for the same
+print(sum_of_first)
+
+
+def first_n(n):
+    num = 0
+    while num < n:
+        yield num
+        num = num + 1
+
+
+sum_of_first_n = sum(first_n(100000))
+print(sum_of_first_n)
+
+# Generator for generating the double of the list number
+l=[1,2,3,4,5,6]
+
+def double(L):
+    for x in L:
+        yield 2*x
+
+output=double(l)
+print(output)  # here output os generator object
+output = (x*2 for x in [1,2,3,4,5])
+print(output)
+
+output = list(double(l))
+print(output)
+
+# The above expression is similar to below line
+output_list = [2*x for x in l]
+print(output_list)
+
+# Simple generator function
+def simple_generator():
+    yield 1
+    yield 2
+    yield 3
+for value in simple_generator():
+    print(value)
+
+# Generator function returns generator object
+# Generator object are used by calling next method or using a used in for in loop method
+x=simple_generator()
+print(next(x))
+print(next(x))
+print(next(x))
+# print(next(simple_generator())) # 1
+# print(next(simple_generator())) # 1
+# print(next(simple_generator())) # 1
+
+
+
+
+
+
+
+
+
+
+
+
+
