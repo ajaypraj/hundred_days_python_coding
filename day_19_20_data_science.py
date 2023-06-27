@@ -433,3 +433,95 @@ Grass  Poison      Bulbasaur  45      49       49       65       65     45      
 Fire   NaN        Charmander  39      52       43       60       50     65           1      False           95 """
 
 print(data1.loc["Grass"])
+# Pivoting the dataframe
+dic={"treatment":["A","A","B","B"],"gender":["F","M","F","M"],"response":[10,45,5,9],"age":[15,4,72,65]}
+df=pd.DataFrame(dic)
+print(df)
+
+print(df.pivot(index='treatment',columns='gender',values='response'))
+
+""" gender      F   M
+treatment
+A          10  45
+B           5   9
+ """
+print(df.pivot(index='treatment',columns='gender',values=['response','age']))
+
+""" 
+          response     age
+gender           F   M   F   M
+treatment
+A               10  45  15   4
+B                5   9  72  65
+
+"""
+
+print("====")
+print(df.pivot(index='treatment',columns=['gender','age'],values='response'))
+""" 
+gender        F     M    F    M
+age          15    4    72   65
+treatment
+A          10.0  45.0  NaN  NaN
+B           NaN   NaN  5.0  9.0
+"""
+# Stacking and Unstacking DataFrame
+df1=df.set_index(['treatment','gender'])
+print(df1)
+"""
+                  response  age
+treatment gender
+A         F             10   15
+          M             45    4
+B         F              5   72
+          M              9   65
+
+"""
+
+print("Unstack level 0",df1.unstack(level=0))
+
+""" 
+          response    age
+treatment        A  B   A   B
+gender
+F               10  5  15  72
+M               45  9   4  65
+"""
+
+print(df1.unstack(level=1))
+""" 
+          response     age
+gender           F   M   F   M
+treatment
+A               10  45  15   4
+B                5   9  72  65
+
+"""
+print(df1)
+"""
+                  response  age
+treatment gender
+A         F             10   15
+          M             45    4
+B         F              5   72
+          M              9   65
+
+"""
+
+# Swap lebel
+
+df2=df1.swaplevel(0,1)
+print(df2)
+""" gender treatment response  age
+F      A                10   15
+M      A                45    4
+F      B                 5   72
+M      B                 9   65
+"""
+
+# melting the DataFrame
+print(pd.melt(df, id_vars="treatment",value_vars=["age","response"]))
+
+# Group by 
+print(df.groupby("treatment").mean())
+ 
